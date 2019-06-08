@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         mLayoutManager = new LinearLayoutManager(this);
         mRecycler.setLayoutManager(mLayoutManager);
 
-        mAdapter = new PostRecyclerAdapter(new ArrayList<PostItem>());
+        mAdapter = new PostRecyclerAdapter(new ArrayList<>());
         mRecycler.setAdapter(mAdapter);
 
         prepareListItem();
@@ -78,31 +78,27 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     private void prepareListItem() {
         final ArrayList<PostItem> items = new ArrayList<>();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < 10; i++) {
-                    itemCount++;
-                    Log.d(TAG, "run -->" + itemCount);
-                    PostItem postItem = new PostItem();
-                    postItem.setTitle("Test App --->" + itemCount);
-                    postItem.setDesc("Fake Android Apps With Over 50,000");
-                    items.add(postItem);
-                }
-
-                if (currentPage != PAGE_START) {
-                    mAdapter.removeLoading();
-                }
-                mAdapter.addAll(items);
-                swipeRefreshLayout.setRefreshing(false);
-
-                if (currentPage < totalPage) {
-                    mAdapter.addLoading();
-                } else {
-                    isLastPage = true;
-                }
-                isLoading = false;
+        new Handler().postDelayed(() -> {
+            for (int i = 0; i < 10; i++) {
+                itemCount++;
+                PostItem postItem = new PostItem();
+                postItem.setTitle("Test App --->" + itemCount);
+                postItem.setDesc("Fake Android Apps With Over 50,000");
+                items.add(postItem);
             }
+
+            if (currentPage != PAGE_START) {
+                mAdapter.removeLoading();
+            }
+            mAdapter.addAll(items);
+            swipeRefreshLayout.setRefreshing(false);
+
+            if (currentPage < totalPage) {
+                mAdapter.addLoading();
+            } else {
+                isLastPage = true;
+            }
+            isLoading = false;
         }, 1500);
     }
 

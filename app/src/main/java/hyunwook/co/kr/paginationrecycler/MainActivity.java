@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         mLayoutManager = new LinearLayoutManager(this);
         mRecycler.setLayoutManager(mLayoutManager);
 
-        mAdapter = new PostRecyclerAdapter(new ArrayList<>());
+        mAdapter = new PostRecyclerAdapter(new ArrayList<PostItem>());
         mRecycler.setAdapter(mAdapter);
 
         prepareListItem();
